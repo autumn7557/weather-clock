@@ -43,30 +43,20 @@
 		color: #b3b3b3;
 	}
 	
-	.fullScreenBtn,
-	.refreshBtn {
-		display: block;
-		font-size: 2.5vw;
-		line-height: 4.5vw;
-		margin : .2vw;
-		padding: 0;
-		cursor: pointer;
-	}
-	
-	.refreshBtn > i {
-	    padding-left: 2px;
-		padding-top: 2px;
-		padding-bottom: 1px;
-	}
-	
 	.dateString {
 		font-size: 3vw;
 		margin: .2vw;
 	}
-	.dateString.birthday {
+	
+	.botUsdRate,
+	.holidayString	{
+		font-size: 2.6vw;
+		line-height: 4.75vw;
+	}
+	.holidayString.birthday {
 		background-color: hsla(30, 100%, 70%, 0.6);
 	}
-	.dateString.holiday {
+	.holidayString.holiday {
 		background-color: hsla(300, 40%, 80%, 0.6);
 	}
 	
@@ -123,24 +113,19 @@
 <body class="bg-black d-grid align-items-center">
 	<div class="container-fluid text-center">
 		<div class="row justify-content-md-center">
-			<div class="col-1 p-0">
-				<div class="border border-2 rounded fullScreenBtn" id="fullScreenBtn" title="全螢幕切換">
-					<i class="fa-solid fa-maximize"></i>
-				</div>
-			</div>
-			<div class="col-1 p-0">
-				<div class="border border-2 rounded refreshBtn" id="refreshBtn" title="重新整理">
-					<i class="fa-solid fa-arrow-rotate-right"></i>
-				</div>
-			</div>
-			<div class="col-4 p-0">
+			<div class="col-auto p-0" style="width: 35.71%;">
 				<div class="border border-2 rounded dateString" id="solarDateString"></div>
 			</div>
-			<div class="col-4 p-0">
+			<div class="col-auto p-0" style="width: 35.71%;">
 				<div class="border border-2 rounded dateString" id="lunisolarDateString"></div>
 			</div>
-			<div class="col-2 p-0">
-				<div class="border border-2 text-dark rounded dateString" id="holidayString">&ensp;</div>
+			<div class="col p-0">
+				<div class="border border-2 rounded botUsdRate" id="botUsdRate" title="重新整理">
+					美元00.000
+				</div>
+			</div>
+			<div class="col p-0">
+				<div class="border border-2 text-dark rounded holidayString" id="holidayString">&ensp;</div>
 			</div>
 		</div>
 		<div class="row">

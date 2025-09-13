@@ -81,7 +81,7 @@ let cwb = Array.from(
 	{ length: 16 },
 	function (element, index) {
 		return {};
-	});;
+	});
 
 $(window).resize(function() {
 	setFullScreenBtnIcon();
@@ -98,8 +98,8 @@ $(function () {
 		});
 	
 	setFullScreenBtnIcon();
-	$("#fullScreenBtn").click(toggleFullScreen);
-	$("#refreshBtn").click(function() {
+	$("#solarDateString").click(toggleFullScreen);
+	$("#lunisolarDateString").click(function() {
 		toast.show();
 		client.publish("refresh", "{}");
 	});
@@ -232,6 +232,7 @@ function initializeMqtt() {
 		"device/+/temperature",
 		"device/+/humidity",
 		"cwb/+/+",
+		"bot/usdRate",
 	];
 	const options = {
 //        username: "admin",
@@ -299,7 +300,7 @@ function onMqttReceiveMessage(topic, message, packet) {
 	
 	if (/^cwb\/[^\/]*\/[^\/]*$/g.test(topic)) {
 		let location = topic.match(/(?<=\/)[^\/]*(?=\/)/g)[0];
-		let type = topic.match(/(?<=\/)[^\/]*(?=$)/g)[0];
+		let type = topic.match(    /(?<=\/)[^\/]*(?=$)/g)[0];
 		
 		switch(type) {
 		case "12小時降雨機率":	// 天氣預報：12小時降雨機率
@@ -357,15 +358,21 @@ function onMqttReceiveMessage(topic, message, packet) {
 			count++;
 		});
 	}
+	
+	if (topic === "bot/usdRate") {
+		console.log(topic);
+		console.log(message);
+		let botUsdRate = JSON.parse(message.toString()).value;
+		$("#botUsdRate").text(`美元${botUsdRate}`);
+		return;
+	}
 }
 
 function setFullScreenBtnIcon() {
 	if (isFullScreen()) {
-		$("#fullScreenBtn").attr("title", "結束全螢幕");
-		$("#fullScreenBtn").html('<i class="fa-solid fa-minimize"></i>');
+		$("#solarDateString").attr("title", "結束全螢幕");
 	} else {
-		$("#fullScreenBtn").attr("title", "啟動全螢幕");
-		$("#fullScreenBtn").html('<i class="fa-solid fa-maximize"></i>');
+		$("#solarDateString").attr("title", "啟動全螢幕");
 	}
 }
 
@@ -386,7 +393,7 @@ function isFullScreen() {
 // Please refer to https://developer.mozilla.org/zh-TW/docs/Web/API/Fullscreen_API
 function toggleFullScreen() {
 	// Let this button to loses focus.
-	$("#fullScreenBtn").blur();
+	$("#solarDateString").blur();
 	
 	if (!isFullScreen()) {
 		if (document.documentElement.requestFullscreen) {
